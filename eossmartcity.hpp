@@ -10,20 +10,48 @@ class eossmartcity: public contract {
 public:
   eossmartcity(account_name self) : contract (self) {}
 
+  // @abi action addcitizen
+  void addcitizen (const account_name    account,
+                   const string&         citizen_name,
+                   uint32_t              projectsvoted,
+                   uint32_t              projectsverified,
+                   uint32_t              projectsimpactvalue,
+                   uint32_t              age,
+                   uint32_t              govermentid);
+  // @abi action addvendor
+  void addvendor (const account_name    account,
+                   const string&         vendor_name,
+                   uint32_t              ratingoutoffive,
+                   uint32_t              projectssubmitted,
+                   uint32_t              projectsfunded,
+                   uint32_t              projectscompleted,
+                   uint32_t              taxidbygov);
+  // @abi action addproject
+  void addproject (const account_name    account,
+                   const string&         project_name,
+                   uint32_t              totaldelivercostvalue,
+                   uint32_t              progresstatus,
+                   uint32_t              votedcitizentotal,
+                   uint32_t              votedcitizenpositive,
+                   bool              isapprovedbygoverment);
+  // @abi action addgoverment
+  void addgoverment (const account_name    account,
+                   const string&         goverment_name,
+                   uint32_t              projectsviewed,
+                   uint32_t              progresstatus,
+                   uint32_t              projectsapproved,
+                   uint32_t              partygovid);
   // @abi action citizenvotingforproject
   void citizenvotingforproject (const account_name    account,
                    const string&         citizen_name,
                    const string&         project_name);
-
   // @abi action govermentapprovingproject
   void govermentapprovingproject (const account_name    account,
                    const string&         goverment_name,
                    const string&         project_name);
-
   // @abi action checkprojectstatus
   void checkprojectstatus (const account_name    account,
                    const string&         project_name);
-
   // @abi action onprojectcomplete
   void onprojectcomplete (const account_name    account,
                    const string&         project_name);
