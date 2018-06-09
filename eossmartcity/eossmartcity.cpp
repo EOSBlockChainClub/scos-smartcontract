@@ -307,17 +307,6 @@ void eossmartcity::govapprove (const account_name    project_account,
 
 }
 
-void eossmartcity::projectstat (const account_name    account,
-                   const string&         project_name) {
-
-  require_auth (account);
-
-/*
-TO BE DONE
-*/
-
-}
-
 void eossmartcity::projectdone (const account_name    vendor_account,
                    const account_name   project_account,
                    uint32_t             tokenquantity,

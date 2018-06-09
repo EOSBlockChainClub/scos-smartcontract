@@ -90,9 +90,6 @@ public:
   void govapprove (const account_name    project_account,
                    const account_name    gov_account,
                    bool              isapprovedbygoverment);
-  // @abi action projectstat
-  void projectstat (const account_name    account,
-                   const string&         project_name);
   // @abi action projectdone
   void projectdone (const account_name    vendor_account,
                    const account_name   project_account,
@@ -173,4 +170,4 @@ private:
 
 };
 
-EOSIO_ABI(eossmartcity, (addcitizen)(addvendor)(addproject)(addgoverment)(citizenupdate)(vendorupdate)(projectupdate)(govupdate)(citizenvote)(govapprove)(projectstat)(projectdone))
+EOSIO_ABI(eossmartcity, (addcitizen)(addvendor)(addproject)(addgoverment)(citizenupdate)(vendorupdate)(projectupdate)(govupdate)(citizenvote)(govapprove)(projectdone))
