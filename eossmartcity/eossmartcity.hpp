@@ -1,9 +1,11 @@
 #include <eosiolib/eosio.hpp>
+#include <eosiolib/asset.hpp>
 #include <eosiolib/print.hpp>
 
 #include <string>
 
 using namespace eosio;
+using eosio::asset;
 using std::string;
 
 class eossmartcity: public contract {
@@ -13,6 +15,7 @@ public:
   // @abi action addcitizen
   void addcitizen (const account_name    account,
                    const string&         citizen_name,
+                   const asset&         citizen_bal,
                    uint32_t              projectsvoted,
                    uint32_t              projectsverified,
                    uint32_t              projectsimpactvalue,
@@ -29,6 +32,7 @@ public:
   // @abi action addproject
   void addproject (const account_name    account,
                    const string&         project_name,
+                   const asset&         project_bal,
                    const string&         project_imagurl,
                    uint32_t              totaldelivercostvalue,
                    uint32_t              progresstatus,
@@ -44,6 +48,7 @@ public:
   // @abi action citizenupdate
   void citizenupdate (const account_name    account,
                    const string&         citizen_name,
+                   const asset&         citizen_bal,
                    uint32_t              projectsvoted,
                    uint32_t              projectsverified,
                    uint32_t              projectsimpactvalue,
@@ -60,6 +65,7 @@ public:
   // @abi action projectupdate
   void projectupdate (const account_name    account,
                    const string&         project_name,
+                   const asset&         project_bal,
                    const string&         project_imagurl,
                    uint32_t              totaldelivercostvalue,
                    uint32_t              progresstatus,
@@ -74,24 +80,26 @@ public:
                    uint32_t              partygovid);
   // @abi action citizenvote
   void citizenvote (const account_name    account,
-                   const string&         citizen_name,
-                   const string&         project_name);
+                   uint32_t             tokenquantity,
+                   const asset&         citizen_bal,
+                   const asset&         project_bal);
   // @abi action govapprove
-  void govapprove (const account_name    account,
-                   const string&         goverment_name,
-                   const string&         project_name);
+  void govapprove (const account_name    account);
   // @abi action projectstat
   void projectstat (const account_name    account,
                    const string&         project_name);
   // @abi action projectdone
   void projectdone (const account_name    account,
-                   const string&         project_name);
+                   uint32_t             tokenquantity,
+                   const asset&         citizen_bal,
+                   const asset&         project_bal);
 private:
 
     // @abi table citizen i64
     struct citizen {
       account_name    account;
       string          citizen_name;
+      asset           citizen_bal;
       uint32_t        projectsvoted;
       uint32_t        projectsverified;
       uint32_t        projectsimpactvalue;
@@ -100,7 +108,7 @@ private:
 
       account_name primary_key() const { return account; }
 
-      EOSLIB_SERIALIZE(citizen, (account)(citizen_name)(projectsvoted)(projectsverified)(projectsimpactvalue)(age)(govermentid))
+      EOSLIB_SERIALIZE(citizen, (account)(citizen_name)(citizen_bal)(projectsvoted)(projectsverified)(projectsimpactvalue)(age)(govermentid))
     };
 
     typedef eosio::multi_index<N(citizen), citizen> citizen_table;
@@ -126,6 +134,7 @@ private:
     struct project {
       account_name    account;
       string          project_name;
+      asset           project_bal;
       string          project_imagurl;
       uint32_t        totaldelivercostvalue;
       uint32_t        progresstatus;
@@ -135,7 +144,7 @@ private:
 
       account_name primary_key() const { return account; }
 
-      EOSLIB_SERIALIZE(project, (account)(project_name)(project_imagurl)(totaldelivercostvalue)(progresstatus)(votedcitizentotal)(votedcitizenpositive)(isapprovedbygoverment))
+      EOSLIB_SERIALIZE(project, (account)(project_name)(project_bal)(project_imagurl)(totaldelivercostvalue)(progresstatus)(votedcitizentotal)(votedcitizenpositive)(isapprovedbygoverment))
     };
 
     typedef eosio::multi_index<N(project), project> project_table;

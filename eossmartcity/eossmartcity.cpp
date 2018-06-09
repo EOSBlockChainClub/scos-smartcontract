@@ -6,9 +6,12 @@
 #include <time.h>       /* time */
 
 using namespace std;
+using namespace eosio;
+using eosio::permission_level;
 
 void eossmartcity::addcitizen (const account_name    account,
                    const string&         citizen_name,
+                   const asset&         citizen_bal,
                    uint32_t              projectsvoted,
                    uint32_t              projectsverified,
                    uint32_t              projectsimpactvalue,
@@ -25,6 +28,7 @@ void eossmartcity::addcitizen (const account_name    account,
   citizen.emplace(account, [&](auto& t) {
     t.account         = account;
     t.citizen_name        = citizen_name;
+    t.citizen_bal        = citizen_bal;
     t.projectsvoted        = projectsvoted;
     t.projectsverified       = projectsverified;
     t.projectsimpactvalue    = projectsimpactvalue;
@@ -37,6 +41,7 @@ void eossmartcity::addcitizen (const account_name    account,
 
 void eossmartcity::citizenupdate (const account_name    account,
                    const string&         citizen_name,
+                   const asset&         citizen_bal,
                    uint32_t              projectsvoted,
                    uint32_t              projectsverified,
                    uint32_t              projectsimpactvalue,
@@ -53,6 +58,7 @@ void eossmartcity::citizenupdate (const account_name    account,
   citizen.modify(itr, account, [&](auto& t) {
     t.account         = account;
     t.citizen_name        = citizen_name;
+    t.citizen_bal        = citizen_bal;
     t.projectsvoted        = projectsvoted;
     t.projectsverified       = projectsverified;
     t.projectsimpactvalue    = projectsimpactvalue;
@@ -121,6 +127,7 @@ void eossmartcity::vendorupdate (const account_name    account,
 
 void eossmartcity::addproject (const account_name    account,
                    const string&         project_name,
+                   const asset&         project_bal,
                    const string&         project_imagurl,
                    uint32_t              totaldelivercostvalue,
                    uint32_t              progresstatus,
@@ -138,6 +145,7 @@ void eossmartcity::addproject (const account_name    account,
   project.emplace(account, [&](auto& t) {
     t.account         = account;
     t.project_name        = project_name;
+    t.project_bal        = project_bal;
     t.project_imagurl        = project_imagurl;    
     t.totaldelivercostvalue        = totaldelivercostvalue;
     t.progresstatus       = progresstatus;
@@ -151,6 +159,7 @@ void eossmartcity::addproject (const account_name    account,
 
 void eossmartcity::projectupdate (const account_name    account,
                    const string&         project_name,
+                   const asset&         project_bal,
                    const string&         project_imagurl,
                    uint32_t              totaldelivercostvalue,
                    uint32_t              progresstatus,
@@ -168,6 +177,7 @@ void eossmartcity::projectupdate (const account_name    account,
   project.modify(itr, account, [&](auto& t) {
     t.account         = account;
     t.project_name        = project_name;
+    t.project_bal        = project_bal;
     t.project_imagurl        = project_imagurl;  
     t.totaldelivercostvalue        = totaldelivercostvalue;
     t.progresstatus       = progresstatus;
@@ -228,20 +238,45 @@ void eossmartcity::govupdate (const account_name    account,
 }
 
 void eossmartcity::citizenvote (const account_name    account,
-                   const string&         citizen_name,
-                   const string&         project_name) {
+                   uint32_t             tokenquantity,
+                   const asset&         citizen_bal,
+                   const asset&         project_bal) {
 
   require_auth (account);
 
-/*
-TO BE DONE
-*/
+  //Check if citizen exists
+  citizen_table citizen(_self, _self);
+
+  auto itr = citizen.find(account);
+  eosio_assert(itr == citizen.end(), "citizen found");
+
+  //Check if project exists
+  project_table project(_self, _self);
+
+  auto itr2 = project.find(account);
+  eosio_assert(itr2 == project.end(), "project found");
+
+  action(
+      permission_level{ account, N(active) },
+      N(eosio.token), N(transfer),
+      std::make_tuple(account, _self, tokenquantity, std::string("ONE TOKEN TRANSFERED ON VOTE to PROJECT"))
+   ).send();
+
+  citizen.modify(itr, account, [&](auto& t) {
+    t.citizen_bal        = citizen_bal;
+  });
+
+  print (name{account}, "citizen balance is reduced by one");
+
+  project.modify(itr2, account, [&](auto& t2) {
+    t2.project_bal        = project_bal;
+  });
+
+  print (name{account}, "project balance is increased by one");
 
 }
 
-void eossmartcity::govapprove (const account_name    account,
-                   const string&         goverment_name,
-                   const string&         project_name) {
+void eossmartcity::govapprove (const account_name    account) {
 
   require_auth (account);
 
@@ -263,7 +298,9 @@ TO BE DONE
 }
 
 void eossmartcity::projectdone (const account_name    account,
-                   const string&         project_name) {
+                   uint32_t             tokenquantity,
+                   const asset&         citizen_bal,
+                   const asset&         project_bal) {
 
   require_auth (account);
 
