@@ -71,6 +71,7 @@ void eossmartcity::citizenupdate (const account_name    account,
 
 void eossmartcity::addvendor (const account_name    account,
                    const string&         vendor_name,
+                   const asset&         vendor_bal,
                    uint32_t              ratingoutoffive,
                    uint32_t              projectssubmitted,
                    uint32_t              projectsfunded,
@@ -87,6 +88,7 @@ void eossmartcity::addvendor (const account_name    account,
   vendor.emplace(account, [&](auto& t) {
     t.account         = account;
     t.vendor_name        = vendor_name;
+    t.vendor_bal        = vendor_bal;
     t.ratingoutoffive        = ratingoutoffive;
     t.projectssubmitted       = projectssubmitted;
     t.projectsfunded    = projectsfunded;
@@ -99,6 +101,7 @@ void eossmartcity::addvendor (const account_name    account,
 
 void eossmartcity::vendorupdate (const account_name    account,
                    const string&         vendor_name,
+                   const asset&         vendor_bal,
                    uint32_t              ratingoutoffive,
                    uint32_t              projectssubmitted,
                    uint32_t              projectsfunded,
@@ -115,6 +118,7 @@ void eossmartcity::vendorupdate (const account_name    account,
   vendor.modify(itr, account, [&](auto& t) {
     t.account         = account;
     t.vendor_name        = vendor_name;
+    t.vendor_bal        = vendor_bal;
     t.ratingoutoffive        = ratingoutoffive;
     t.projectssubmitted       = projectssubmitted;
     t.projectsfunded    = projectsfunded;
@@ -298,15 +302,42 @@ TO BE DONE
 
 }
 
-void eossmartcity::projectdone (const account_name    account,
+void eossmartcity::projectdone (const account_name    vendor_account,
+                   const account_name   project_account,
                    uint32_t             tokenquantity,
-                   const asset&         citizen_bal,
+                   const asset&         vendor_bal,
                    const asset&         project_bal) {
 
-  require_auth (account);
+  require_auth (project_account);
 
-/*
-TO BE DONE
-*/
+  //Check if vendor exists
+  vendor_table vendor(_self, _self);
+
+  auto itr = vendor.find(vendor_account);
+  eosio_assert(itr == vendor.end(), "vendor found");
+
+  //Check if project exists
+  project_table project(_self, _self);
+
+  auto itr2 = project.find(project_account);
+  eosio_assert(itr2 == project.end(), "project found");
+
+  action(
+      permission_level{ project_account, N(active) },
+      N(eosio.token), N(transfer),
+      std::make_tuple(project_account, vendor_account, tokenquantity, std::string("ALL TOKEN TRANSFERED FROM PROJECT TO VENDOR AFTER DELIVERY"))
+   ).send();
+
+  vendor.modify(itr, vendor_account, [&](auto& t) {
+    t.vendor_bal        = vendor_bal;
+  });
+
+  print (name{vendor_account}, "vendor balance is updated");
+
+  project.modify(itr2, project_account, [&](auto& t2) {
+    t2.project_bal        = project_bal;
+  });
+
+  print (name{project_account}, "project balance is increased by one");
 
 }

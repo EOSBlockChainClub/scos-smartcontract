@@ -24,6 +24,7 @@ public:
   // @abi action addvendor
   void addvendor (const account_name    account,
                    const string&         vendor_name,
+                   const asset&         vendor_bal,
                    uint32_t              ratingoutoffive,
                    uint32_t              projectssubmitted,
                    uint32_t              projectsfunded,
@@ -57,6 +58,7 @@ public:
   // @abi action vendorupdate
   void vendorupdate (const account_name    account,
                    const string&         vendor_name,
+                   const asset&         vendor_bal,
                    uint32_t              ratingoutoffive,
                    uint32_t              projectssubmitted,
                    uint32_t              projectsfunded,
@@ -90,9 +92,10 @@ public:
   void projectstat (const account_name    account,
                    const string&         project_name);
   // @abi action projectdone
-  void projectdone (const account_name    account,
+  void projectdone (const account_name    vendor_account,
+                   const account_name   project_account,
                    uint32_t             tokenquantity,
-                   const asset&         citizen_bal,
+                   const asset&         vendor_bal,
                    const asset&         project_bal);
 private:
 
@@ -118,6 +121,7 @@ private:
     struct vendor {
       account_name    account;
       string          vendor_name;
+      asset           vendor_bal;
       uint32_t        ratingoutoffive;
       uint32_t        projectssubmitted;
       uint32_t        projectsfunded;
@@ -126,7 +130,7 @@ private:
 
       account_name primary_key() const { return account; }
 
-      EOSLIB_SERIALIZE(vendor, (account)(vendor_name)(ratingoutoffive)(projectssubmitted)(projectsfunded)(projectscompleted)(taxidbygov))
+      EOSLIB_SERIALIZE(vendor, (account)(vendor_name)(vendor_bal)(ratingoutoffive)(projectssubmitted)(projectsfunded)(projectscompleted)(taxidbygov))
     };
 
     typedef eosio::multi_index<N(vendor), vendor> vendor_table;
