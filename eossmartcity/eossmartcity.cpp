@@ -281,13 +281,29 @@ void eossmartcity::citizenvote (const account_name    citizen_account,
 
 }
 
-void eossmartcity::govapprove (const account_name    account) {
 
-  require_auth (account);
+void eossmartcity::govapprove (const account_name    project_account,
+                   const account_name    gov_account,
+                   bool              isapprovedbygoverment) {
 
-/*
-TO BE DONE
-*/
+  require_auth (gov_account);
+
+  goverment_table goverment(_self, _self);
+
+  auto itr = goverment.find(gov_account);
+  eosio_assert(itr == goverment.end(), "goverment found");
+
+  project_table project(_self, _self);
+
+  auto itr2 = project.find(project_account);
+  eosio_assert(itr2 == project.end(), "project found");
+
+  project.modify(itr2, project_account, [&](auto& t) {
+    t.isapprovedbygoverment         = isapprovedbygoverment;
+  });
+
+  print (name{gov_account}, " goverment has approved the project.");
+  print (name{project_account}, " project has approved by the goverment.");
 
 }
 

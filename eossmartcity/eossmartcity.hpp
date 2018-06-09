@@ -87,7 +87,9 @@ public:
                    const asset&         citizen_bal,
                    const asset&         project_bal);
   // @abi action govapprove
-  void govapprove (const account_name    account);
+  void govapprove (const account_name    project_account,
+                   const account_name    gov_account,
+                   bool              isapprovedbygoverment);
   // @abi action projectstat
   void projectstat (const account_name    account,
                    const string&         project_name);
