@@ -30,6 +30,6 @@
 *.exe
 *.out
 *.app
-eossmartcity.wasm
-eossmartcity.wast
-eossmartcity.abi
+eossmartcity/eossmartcity.abi
+eossmartcity/eossmartcity.wasm
+eossmartcity/eossmartcity.wast

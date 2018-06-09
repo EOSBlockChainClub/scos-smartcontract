@@ -40,6 +40,36 @@ public:
                    uint32_t              projectsviewed,
                    uint32_t              projectsapproved,
                    uint32_t              partygovid);
+  // @abi action citizenupdate
+  void citizenupdate (const account_name    account,
+                   const string&         citizen_name,
+                   uint32_t              projectsvoted,
+                   uint32_t              projectsverified,
+                   uint32_t              projectsimpactvalue,
+                   uint32_t              age,
+                   uint32_t              govermentid);
+  // @abi action vendorupdate
+  void vendorupdate (const account_name    account,
+                   const string&         vendor_name,
+                   uint32_t              ratingoutoffive,
+                   uint32_t              projectssubmitted,
+                   uint32_t              projectsfunded,
+                   uint32_t              projectscompleted,
+                   uint32_t              taxidbygov);
+  // @abi action projectupdate
+  void projectupdate (const account_name    account,
+                   const string&         project_name,
+                   uint32_t              totaldelivercostvalue,
+                   uint32_t              progresstatus,
+                   uint32_t              votedcitizentotal,
+                   uint32_t              votedcitizenpositive,
+                   bool              isapprovedbygoverment);
+  // @abi action govupdate
+  void govupdate (const account_name    account,
+                   const string&         goverment_name,
+                   uint32_t              projectsviewed,
+                   uint32_t              projectsapproved,
+                   uint32_t              partygovid);
   // @abi action citizenvote
   void citizenvote (const account_name    account,
                    const string&         citizen_name,
@@ -124,4 +154,4 @@ private:
 
 };
 
-EOSIO_ABI(eossmartcity, (addcitizen)(addvendor)(addproject)(addgoverment)(citizenvote)(govapprove)(projectstat)(projectdone))
+EOSIO_ABI(eossmartcity, (addcitizen)(addvendor)(addproject)(addgoverment)(citizenupdate)(vendorupdate)(projectupdate)(govupdate)(citizenvote)(govapprove)(projectstat)(projectdone))
