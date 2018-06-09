@@ -76,28 +76,30 @@ add_new_account "govt"
 
 # Add more smart contract accounts
 add_new_account "eosio.token"
+add_new_account "eossmartcity"
 
 # Create smart contract
-
+SMART_CONTRACT_NAME="eossmartcity"
 # Create WASM file
-# eosiocpp -o /work/hello/hello.wasn /work/hello/hello.cpp
+eosiocpp -o /work/${SMART_CONTRACT_NAME}/${SMART_CONTRACT_NAME}.wasm /work/${SMART_CONTRACT_NAME}/${SMART_CONTRACT_NAME}.cpp
 
 # Create ABI file
-# eosiocpp -g /work/hello/hello.abi /work/hello/hello.cpp
+eosiocpp -g /work/${SMART_CONTRACT_NAME}/${SMART_CONTRACT_NAME}.abi /work/${SMART_CONTRACT_NAME}/${SMART_CONTRACT_NAME}.cpp
 
 # Deploy smart contract
 # cleos set contract testacc /work/hello/ --permission testacc
-cleos set contract eosio.token contracts/eosio.token -p eosio.token
+# cleos set contract eosio.token contracts/eosio.token -p eosio.token
+cleos set contract ${SMART_CONTRACT_NAME} /work/${SMART_CONTRACT_NAME} -p ${SMART_CONTRACT_NAME}
 
 # Issue tokens
-cleos push action eosio.token create '{"issuer":"eosio", "maximum_supply":"1000000000.0000 HAK"}' -p eosio.token
-cleos push action eosio.token issue '[ "testacc", "100.0000 HAK", "airdrop" ]' -p eosio
-cleos push action eosio.token issue '[ "citizen1", "100.0000 HAK", "memo" ]' -p eosio
-cleos push action eosio.token issue '[ "citizen2", "100.0000 HAK", "memo" ]' -p eosio
-cleos push action eosio.token issue '[ "citizen3", "100.0000 HAK", "memo" ]' -p eosio
-cleos push action eosio.token issue '[ "citizen4", "100.0000 HAK", "memo" ]' -p eosio
-cleos push action eosio.token issue '[ "citizen5", "100.0000 HAK", "memo" ]' -p eosio
-cleos push action eosio.token transfer '[ "citizen1", "project1", "25.0000 HAK", "voted"] ' -p citizen1
+# cleos push action eosio.token create '{"issuer":"eosio", "maximum_supply":"1000000000.0000 HAK"}' -p eosio.token
+# cleos push action eosio.token issue '[ "testacc", "100.0000 HAK", "airdrop" ]' -p eosio
+# cleos push action eosio.token issue '[ "citizen1", "100.0000 HAK", "memo" ]' -p eosio
+# cleos push action eosio.token issue '[ "citizen2", "100.0000 HAK", "memo" ]' -p eosio
+# cleos push action eosio.token issue '[ "citizen3", "100.0000 HAK", "memo" ]' -p eosio
+# cleos push action eosio.token issue '[ "citizen4", "100.0000 HAK", "memo" ]' -p eosio
+# cleos push action eosio.token issue '[ "citizen5", "100.0000 HAK", "memo" ]' -p eosio
+# cleos push action eosio.token transfer '[ "citizen1", "project1", "25.0000 HAK", "voted"] ' -p citizen1
 
 # Add more data models
 
