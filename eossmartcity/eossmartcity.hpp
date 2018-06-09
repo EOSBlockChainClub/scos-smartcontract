@@ -40,19 +40,19 @@ public:
                    uint32_t              projectsviewed,
                    uint32_t              projectsapproved,
                    uint32_t              partygovid);
-  // @abi action citizenvotingforproject
-  void citizenvotingforproject (const account_name    account,
+  // @abi action citizenvote
+  void citizenvote (const account_name    account,
                    const string&         citizen_name,
                    const string&         project_name);
-  // @abi action govermentapprovingproject
-  void govermentapprovingproject (const account_name    account,
+  // @abi action govapprove
+  void govapprove (const account_name    account,
                    const string&         goverment_name,
                    const string&         project_name);
-  // @abi action checkprojectstatus
-  void checkprojectstatus (const account_name    account,
+  // @abi action projectstat
+  void projectstat (const account_name    account,
                    const string&         project_name);
-  // @abi action onprojectcomplete
-  void onprojectcomplete (const account_name    account,
+  // @abi action projectdone
+  void projectdone (const account_name    account,
                    const string&         project_name);
 private:
 
@@ -124,4 +124,4 @@ private:
 
 };
 
-EOSIO_ABI(eossmartcity, (citizenvotingforproject)(govermentapprovingproject)(checkprojectstatus)(onprojectcomplete))
+EOSIO_ABI(eossmartcity, (addcitizen)(addvendor)(addproject)(addgoverment)(citizenvote)(govapprove)(projectstat)(projectdone))
