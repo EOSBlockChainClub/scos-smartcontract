@@ -35,13 +35,13 @@ private:
       string          citizen_name;
       uint32_t        projectsvoted;
       uint32_t        projectsverified;
-      uint32_t        projectsimpactValue;
+      uint32_t        projectsimpactvalue;
       uint32_t        age;
       uint32_t        govermentid;
 
       account_name primary_key() const { return account; }
 
-      EOSLIB_SERIALIZE(citizen, (account)(citizen_name)(projectsvoted)(projectsverified)(projectsimpactValue)(age)(govermentid))
+      EOSLIB_SERIALIZE(citizen, (account)(citizen_name)(projectsvoted)(projectsverified)(projectsimpactvalue)(age)(govermentid))
     };
 
     typedef eosio::multi_index<N(citizen), citizen> citizen_table;
@@ -67,7 +67,6 @@ private:
     struct project {
       account_name    account;
       string          project_name;
-      uint32_t        numberofcompletedstages;
       uint32_t        totaldelivercostvalue;
       uint32_t        progresstatus;
       uint32_t        votedcitizentotal;
@@ -76,7 +75,7 @@ private:
 
       account_name primary_key() const { return account; }
 
-      EOSLIB_SERIALIZE(project, (account)(project_name)(numberofcompletedstages)(totaldelivercostvalue)(progresstatus)(votedcitizentotal)(votedcitizenpositive)(isapprovedbygoverment))
+      EOSLIB_SERIALIZE(project, (account)(project_name)(totaldelivercostvalue)(progresstatus)(votedcitizentotal)(votedcitizenpositive)(isapprovedbygoverment))
     };
 
     typedef eosio::multi_index<N(project), project> project_table;
