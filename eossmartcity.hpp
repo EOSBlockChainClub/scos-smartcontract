@@ -38,7 +38,6 @@ public:
   void addgoverment (const account_name    account,
                    const string&         goverment_name,
                    uint32_t              projectsviewed,
-                   uint32_t              progresstatus,
                    uint32_t              projectsapproved,
                    uint32_t              partygovid);
   // @abi action citizenvotingforproject

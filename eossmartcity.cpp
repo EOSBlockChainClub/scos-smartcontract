@@ -94,7 +94,6 @@ void eossmartcity::addproject (const account_name    account,
 void eossmartcity::addgoverment (const account_name    account,
                    const string&         goverment_name,
                    uint32_t              projectsviewed,
-                   uint32_t              progresstatus,
                    uint32_t              projectsapproved,
                    uint32_t              partygovid) {
 
@@ -109,7 +108,6 @@ void eossmartcity::addgoverment (const account_name    account,
     t.account         = account;
     t.goverment_name        = goverment_name;
     t.projectsviewed        = projectsviewed;
-    t.progresstatus       = progresstatus;
     t.projectsapproved    = projectsapproved;
     t.partygovid  = partygovid;
   });
