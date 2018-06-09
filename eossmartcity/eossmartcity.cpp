@@ -237,42 +237,43 @@ void eossmartcity::govupdate (const account_name    account,
   print (name{account}, " goverment updated.");
 }
 
-void eossmartcity::citizenvote (const account_name    account,
+void eossmartcity::citizenvote (const account_name    citizen_account,
+                   const account_name   project_account,
                    uint32_t             tokenquantity,
                    const asset&         citizen_bal,
                    const asset&         project_bal) {
 
-  require_auth (account);
+  require_auth (citizen_account);
 
   //Check if citizen exists
   citizen_table citizen(_self, _self);
 
-  auto itr = citizen.find(account);
+  auto itr = citizen.find(citizen_account);
   eosio_assert(itr == citizen.end(), "citizen found");
 
   //Check if project exists
   project_table project(_self, _self);
 
-  auto itr2 = project.find(account);
+  auto itr2 = project.find(project_account);
   eosio_assert(itr2 == project.end(), "project found");
 
   action(
-      permission_level{ account, N(active) },
+      permission_level{ citizen_account, N(active) },
       N(eosio.token), N(transfer),
-      std::make_tuple(account, _self, tokenquantity, std::string("ONE TOKEN TRANSFERED ON VOTE to PROJECT"))
+      std::make_tuple(citizen_account, project_account, tokenquantity, std::string("ONE TOKEN TRANSFERED ON VOTE to PROJECT"))
    ).send();
 
-  citizen.modify(itr, account, [&](auto& t) {
+  citizen.modify(itr, citizen_account, [&](auto& t) {
     t.citizen_bal        = citizen_bal;
   });
 
-  print (name{account}, "citizen balance is reduced by one");
+  print (name{citizen_account}, "citizen balance is reduced by one");
 
-  project.modify(itr2, account, [&](auto& t2) {
+  project.modify(itr2, project_account, [&](auto& t2) {
     t2.project_bal        = project_bal;
   });
 
-  print (name{account}, "project balance is increased by one");
+  print (name{project_account}, "project balance is increased by one");
 
 }
 

@@ -79,7 +79,8 @@ public:
                    uint32_t              projectsapproved,
                    uint32_t              partygovid);
   // @abi action citizenvote
-  void citizenvote (const account_name    account,
+  void citizenvote (const account_name    citizen_account,
+                   const account_name   project_account,
                    uint32_t             tokenquantity,
                    const asset&         citizen_bal,
                    const asset&         project_bal);
