@@ -29,6 +29,7 @@ public:
   // @abi action addproject
   void addproject (const account_name    account,
                    const string&         project_name,
+                   const string&         project_imagurl,
                    uint32_t              totaldelivercostvalue,
                    uint32_t              progresstatus,
                    uint32_t              votedcitizentotal,
@@ -59,6 +60,7 @@ public:
   // @abi action projectupdate
   void projectupdate (const account_name    account,
                    const string&         project_name,
+                   const string&         project_imagurl,
                    uint32_t              totaldelivercostvalue,
                    uint32_t              progresstatus,
                    uint32_t              votedcitizentotal,
@@ -124,6 +126,7 @@ private:
     struct project {
       account_name    account;
       string          project_name;
+      string          project_imagurl;
       uint32_t        totaldelivercostvalue;
       uint32_t        progresstatus;
       uint32_t        votedcitizentotal;
@@ -132,7 +135,7 @@ private:
 
       account_name primary_key() const { return account; }
 
-      EOSLIB_SERIALIZE(project, (account)(project_name)(totaldelivercostvalue)(progresstatus)(votedcitizentotal)(votedcitizenpositive)(isapprovedbygoverment))
+      EOSLIB_SERIALIZE(project, (account)(project_name)(project_imagurl)(totaldelivercostvalue)(progresstatus)(votedcitizentotal)(votedcitizenpositive)(isapprovedbygoverment))
     };
 
     typedef eosio::multi_index<N(project), project> project_table;

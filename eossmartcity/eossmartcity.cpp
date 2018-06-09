@@ -121,6 +121,7 @@ void eossmartcity::vendorupdate (const account_name    account,
 
 void eossmartcity::addproject (const account_name    account,
                    const string&         project_name,
+                   const string&         project_imagurl,
                    uint32_t              totaldelivercostvalue,
                    uint32_t              progresstatus,
                    uint32_t              votedcitizentotal,
@@ -137,6 +138,7 @@ void eossmartcity::addproject (const account_name    account,
   project.emplace(account, [&](auto& t) {
     t.account         = account;
     t.project_name        = project_name;
+    t.project_imagurl        = project_imagurl;    
     t.totaldelivercostvalue        = totaldelivercostvalue;
     t.progresstatus       = progresstatus;
     t.votedcitizentotal    = votedcitizentotal;
@@ -149,6 +151,7 @@ void eossmartcity::addproject (const account_name    account,
 
 void eossmartcity::projectupdate (const account_name    account,
                    const string&         project_name,
+                   const string&         project_imagurl,
                    uint32_t              totaldelivercostvalue,
                    uint32_t              progresstatus,
                    uint32_t              votedcitizentotal,
@@ -165,6 +168,7 @@ void eossmartcity::projectupdate (const account_name    account,
   project.modify(itr, account, [&](auto& t) {
     t.account         = account;
     t.project_name        = project_name;
+    t.project_imagurl        = project_imagurl;  
     t.totaldelivercostvalue        = totaldelivercostvalue;
     t.progresstatus       = progresstatus;
     t.votedcitizentotal    = votedcitizentotal;
