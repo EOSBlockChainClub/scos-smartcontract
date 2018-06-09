@@ -253,13 +253,13 @@ void eossmartcity::citizenvote (const account_name    citizen_account,
   citizen_table citizen(_self, _self);
 
   auto itr = citizen.find(citizen_account);
-  eosio_assert(itr == citizen.end(), "citizen found");
+  eosio_assert(itr != citizen.end(), "citizen  not found");
 
   //Check if project exists
   project_table project(_self, _self);
 
   auto itr2 = project.find(project_account);
-  eosio_assert(itr2 == project.end(), "project found");
+  eosio_assert(itr2 != project.end(), "project  not found");
 
   action(
       permission_level{ citizen_account, N(active) },
@@ -291,12 +291,12 @@ void eossmartcity::govapprove (const account_name    project_account,
   goverment_table goverment(_self, _self);
 
   auto itr = goverment.find(gov_account);
-  eosio_assert(itr == goverment.end(), "goverment found");
+  eosio_assert(itr != goverment.end(), "goverment  not found");
 
   project_table project(_self, _self);
 
   auto itr2 = project.find(project_account);
-  eosio_assert(itr2 == project.end(), "project found");
+  eosio_assert(itr2 != project.end(), "project  not found");
 
   project.modify(itr2, project_account, [&](auto& t) {
     t.isapprovedbygoverment         = isapprovedbygoverment;
@@ -319,13 +319,13 @@ void eossmartcity::projectdone (const account_name    vendor_account,
   vendor_table vendor(_self, _self);
 
   auto itr = vendor.find(vendor_account);
-  eosio_assert(itr == vendor.end(), "vendor found");
+  eosio_assert(itr != vendor.end(), "vendor  not found");
 
   //Check if project exists
   project_table project(_self, _self);
 
   auto itr2 = project.find(project_account);
-  eosio_assert(itr2 == project.end(), "project found");
+  eosio_assert(itr2 != project.end(), "project  not found");
 
   action(
       permission_level{ project_account, N(active) },
