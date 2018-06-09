@@ -32,3 +32,4 @@
 *.app
 eossmartcity.wasm
 eossmartcity.wast
+eossmartcity.abi

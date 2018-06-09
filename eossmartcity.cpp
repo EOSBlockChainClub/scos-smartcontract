@@ -115,7 +115,7 @@ void eossmartcity::addgoverment (const account_name    account,
   print (name{account}, " goverment created.");
 }
 
-void eossmartcity::citizenvoteforproject (const account_name    account,
+void eossmartcity::citizenvote (const account_name    account,
                    const string&         citizen_name,
                    const string&         project_name) {
 
@@ -127,7 +127,7 @@ TO BE DONE
 
 }
 
-void eossmartcity::govapprovingproject (const account_name    account,
+void eossmartcity::govapprove (const account_name    account,
                    const string&         goverment_name,
                    const string&         project_name) {
 
@@ -139,7 +139,7 @@ TO BE DONE
 
 }
 
-void eossmartcity::checkprojectstatus (const account_name    account,
+void eossmartcity::projectstat (const account_name    account,
                    const string&         project_name) {
 
   require_auth (account);
@@ -150,7 +150,7 @@ TO BE DONE
 
 }
 
-void eossmartcity::onprojectcomplete (const account_name    account,
+void eossmartcity::projectdone (const account_name    account,
                    const string&         project_name) {
 
   require_auth (account);
