@@ -241,6 +241,7 @@ void eossmartcity::govupdate (const account_name    account,
   print (name{account}, " goverment updated.");
 }
 
+/* DO NOT USE */
 void eossmartcity::citizenvote (const account_name    citizen_account,
                    const account_name   project_account,
                    uint32_t             tokenquantity,
@@ -250,16 +251,16 @@ void eossmartcity::citizenvote (const account_name    citizen_account,
   require_auth (citizen_account);
 
   //Check if citizen exists
-  citizen_table citizen(_self, _self);
+  // citizen_table citizen(_self, _self);
 
-  auto itr = citizen.find(citizen_account);
-  eosio_assert(itr != citizen.end(), "citizen  not found");
+  // auto itr = citizen.find(citizen_account);
+  // eosio_assert(itr != citizen.end(), "citizen  not found");
 
   //Check if project exists
-  project_table project(_self, _self);
+  // project_table project(_self, _self);
 
-  auto itr2 = project.find(project_account);
-  eosio_assert(itr2 != project.end(), "project  not found");
+  // auto itr2 = project.find(project_account);
+  // eosio_assert(itr2 != project.end(), "project  not found");
 
   action(
       permission_level{ citizen_account, N(active) },
@@ -307,6 +308,7 @@ void eossmartcity::govapprove (const account_name    project_account,
 
 }
 
+/* DO NOT USE */
 void eossmartcity::projectdone (const account_name    vendor_account,
                    const account_name   project_account,
                    uint32_t             tokenquantity,

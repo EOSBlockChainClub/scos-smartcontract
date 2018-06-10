@@ -101,8 +101,8 @@ private:
     // @abi table citizen i64
     struct citizen {
       account_name    account;
-      string          citizen_name;
       asset           citizen_bal;
+      string          citizen_name;
       uint32_t        projectsvoted;
       uint32_t        projectsverified;
       uint32_t        projectsimpactvalue;
@@ -111,7 +111,7 @@ private:
 
       account_name primary_key() const { return account; }
 
-      EOSLIB_SERIALIZE(citizen, (account)(citizen_name)(citizen_bal)(projectsvoted)(projectsverified)(projectsimpactvalue)(age)(govermentid))
+      // EOSLIB_SERIALIZE(citizen, (account)(citizen_name)(citizen_bal)(projectsvoted)(projectsverified)(projectsimpactvalue)(age)(govermentid))
     };
 
     typedef eosio::multi_index<N(citizen), citizen> citizen_table;
@@ -129,7 +129,7 @@ private:
 
       account_name primary_key() const { return account; }
 
-      EOSLIB_SERIALIZE(vendor, (account)(vendor_name)(vendor_bal)(ratingoutoffive)(projectssubmitted)(projectsfunded)(projectscompleted)(taxidbygov))
+      // EOSLIB_SERIALIZE(vendor, (account)(vendor_name)(vendor_bal)(ratingoutoffive)(projectssubmitted)(projectsfunded)(projectscompleted)(taxidbygov))
     };
 
     typedef eosio::multi_index<N(vendor), vendor> vendor_table;
@@ -137,8 +137,8 @@ private:
     // @abi table project i64
     struct project {
       account_name    account;
-      string          project_name;
       asset           project_bal;
+      string          project_name;
       string          project_imagurl;
       uint32_t        totaldelivercostvalue;
       uint32_t        progresstatus;
@@ -148,7 +148,7 @@ private:
 
       account_name primary_key() const { return account; }
 
-      EOSLIB_SERIALIZE(project, (account)(project_name)(project_bal)(project_imagurl)(totaldelivercostvalue)(progresstatus)(votedcitizentotal)(votedcitizenpositive)(isapprovedbygoverment))
+      // EOSLIB_SERIALIZE(project, (account)(project_name)(project_bal)(project_imagurl)(totaldelivercostvalue)(progresstatus)(votedcitizentotal)(votedcitizenpositive)(isapprovedbygoverment))
     };
 
     typedef eosio::multi_index<N(project), project> project_table;
